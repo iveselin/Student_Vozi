@@ -1,9 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="hr.ferit.iveselin.studentvozi.AddRequestActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/bSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/bSubmitText"
+        />
+
+    <DatePicker
+        android:id="@+id/dpDateSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:datePickerMode="calendar"
+        android:layout_below="@id/bSubmit"
+        ></DatePicker>
+
+    <TimePicker
+        android:id="@+id/tpTimeSelect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:timePickerMode="spinner"
+        android:layout_below="@id/dpDateSelect"
+        ></TimePicker>
+
+
+
+</RelativeLayout>
