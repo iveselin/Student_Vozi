@@ -1,6 +1,3 @@
 <resources>
     <string name="app_name">Student vozi</string>
-    <string name="bAddRideText">Dodaj vožnju</string>
-    <string name="bFindRideText">Traži vožnju</string>
-    <string name="bSubmitText">Unesi</string>
 </resources>
