@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
     defaultConfig {
         applicationId "hr.ferit.iveselin.studentvozi"
         minSdkVersion 21
@@ -20,39 +20,22 @@ android {
     }
 }
 
-def BUTTER_KNIFE_VERSION = "8.8.1" //working version of ButterKnife
+def BUTTER_KNIFE_VERSION = "8.8.1" //working version of butterknife
 def GAPPS_MAP_VERSION = "15.0.1"
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-
-    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
-    implementation 'com.android.support:recyclerview-v7:26.1.0'
-    implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
 
-    implementation 'com.google.firebase:firebase-core:16.0.1'
-    implementation 'com.google.firebase:firebase-auth:16.0.2'
-    implementation 'com.google.firebase:firebase-database:16.0.1'
-
-
-    implementation 'com.facebook.android:facebook-login:[4,5)'
-
-
-    implementation "com.google.android.gms:play-services-places:$GAPPS_MAP_VERSION"
-    implementation "com.google.android.gms:play-services-maps:$GAPPS_MAP_VERSION"
     implementation "com.google.android.gms:play-services-location:$GAPPS_MAP_VERSION"
+    implementation "com.google.android.gms:play-services-maps:$GAPPS_MAP_VERSION"
 
     implementation "com.jakewharton:butterknife:$BUTTER_KNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTER_KNIFE_VERSION"
 
     testImplementation 'junit:junit:4.12'
 }
-
-
-
-apply plugin: 'com.google.gms.google-services'

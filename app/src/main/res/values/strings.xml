@@ -1,34 +1,3 @@
 <resources>
     <string name="app_name">Student vozi</string>
-    <string name="facebook_app_id">377371646125247</string>
-    <string name="fb_login_protocol_scheme">fb377371646125247</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="ride_search_title">Traži/ponudi vožnju</string>
-    <string name="departure_location_title">Lokacija polaska</string>
-    <string name="main_title">Student vozi</string>
-    <string name="submit_request_button_text">Postavi zahtjev</string>
-    <string name="ride_type_offer_text">Nudim prijevoz</string>
-    <string name="ride_type_request_text">Tražim prijevoz</string>
-    <string name="ride_type_title">Vrsta zahtjeva:</string>
-    <string name="numer_input_title_text">Broj mjesta:</string>
-    <string name="add_date_text">Datum</string>
-    <string name="add_time_text">Vrijeme</string>
-    <string name="add_location_text">Unesi lokaciju</string>
-    <string name="departure_location_hint">Putujem od:</string>
-    <string name="destination_location_hint">Putujem do:</string>
-    <string name="dialog_positive_text">Prihvati adresu</string>
-    <string name="dialog_negative_text">Odbaci</string>
-    <string name="new_ride_input_text">Nova ponuda</string>
-    <string name="sign_in_text">Prijava</string>
-    <string name="sign_out_text">Odjava</string>
-    <string name="empty_input_field_error">Morate ispuniti ovo polje</string>
-    <string name="result_title">Ponuda i potražnja</string>
-    <string name="show_rides_text">Pregledaj vožnje</string>
-    <string name="ride_dialog_positive_text">Prijavi se</string>
-    <string name="show_user_rides_text">Pregledaj svoje vožnje</string>
-    <string name="user_offer_heading_text">Tvoja ponuda</string>
-    <string name="applied_text">Prijavljeni</string>
-    <string name="user_request_heading_text">Tvoja potražnja</string>
-    <string name="offer_error_text">Nemate trenutnih ponuda</string>
-    <string name="request_error_text">Nemate trenutnih potražnji</string>
 </resources>
