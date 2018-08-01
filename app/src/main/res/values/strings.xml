@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Student vozi</string>
+    <string name="facebook_app_id">377371646125247</string>
+    <string name="fb_login_protocol_scheme">fb377371646125247</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="ride_search_title">Traži/ponudi vožnju</string>
+    <string name="departure_location_title">Lokacija polaska</string>
+    <string name="main_title">Student vozi</string>
+    <string name="submit_request_button_text">Postavi zahtjev</string>
 </resources>

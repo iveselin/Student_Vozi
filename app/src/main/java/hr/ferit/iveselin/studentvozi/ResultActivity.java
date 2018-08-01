@@ -1,9 +1,17 @@
 package hr.ferit.iveselin.studentvozi;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ResultActivity extends AppCompatActivity {
+import hr.ferit.iveselin.studentvozi.base.BaseActivity;
+
+public class ResultActivity extends BaseActivity {
+
+    public static Intent getLaunchIntent(Context fromContext) {
+        return new Intent(fromContext, ResultActivity.class);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
