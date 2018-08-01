@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -29,8 +28,6 @@ import butterknife.ButterKnife;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
-
-    private static final String TAG = "LoginActivity";
 
 
     @BindView(R.id.login_button)
@@ -75,19 +72,18 @@ public class LoginActivity extends BaseActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.d(TAG, "onSuccess: successful login");
+                Toast.makeText(getApplicationContext(), "Succes in login yeeey", Toast.LENGTH_SHORT).show();
                 handleFacebookLogin(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
-                Log.d(TAG, "onCancel: user canceled the login");
-                Toast.makeText(getApplicationContext(), "Kako bi pristupili aplikaciji, morate biti prijavljeni", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
             public void onError(FacebookException error) {
-                Log.d(TAG, "facebook login failed:" + error.toString());
+
             }
         });
 

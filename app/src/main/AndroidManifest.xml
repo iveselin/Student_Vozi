@@ -3,7 +3,6 @@
     package="hr.ferit.iveselin.studentvozi">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -16,6 +15,7 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,7 +30,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".LocationActivity" />
         <activity
-            android:name=".results.ResultActivity"
+            android:name=".ResultActivity"
             android:screenOrientation="portrait" />
 
         <meta-data
@@ -59,7 +59,6 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".UserPostsActivity"></activity>
     </application>
 
 </manifest>

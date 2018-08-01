@@ -5,4 +5,56 @@
     android:layout_height="match_parent"
     tools:context="hr.ferit.iveselin.studentvozi.AddRequestActivity">
 
+    <FrameLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/actionBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/defaultMargin"
+            android:text="@string/ride_search_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/actionBarTextSize" />
+    </FrameLayout>
+
+
+    <NumberPicker
+        android:id="@+id/numberInput"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actionBar"
+        android:solidColor="@color/colorPrimary" />
+
+    <RadioGroup
+        android:id="@+id/rideTypeGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actionBar"
+        android:layout_toEndOf="@id/numberInput">
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text" />
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Text2" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitRequest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/submit_request_button_text" />
+
+
 </RelativeLayout>

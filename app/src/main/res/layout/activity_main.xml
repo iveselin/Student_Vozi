@@ -5,5 +5,42 @@
     android:layout_height="match_parent"
     tools:context="hr.ferit.iveselin.studentvozi.MainActivity">
 
+    <FrameLayout
+        android:id="@+id/actionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/actionBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/defaultMargin"
+            android:text="@string/main_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/actionBarTextSize" />
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/actionBar"
+        android:text="Sign in" />
+
+    <Button
+        android:id="@+id/locate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sign_in"
+        android:text="Locate yourself" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/locate"
+        android:text="Logout"/>
 
 </RelativeLayout>
