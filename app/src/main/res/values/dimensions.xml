@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="defaultMargin">10dp</dimen>
+    <dimen name="actionBarTextSize">17sp</dimen>
+    <dimen name="defaultPaddign">5dp</dimen>
+</resources>

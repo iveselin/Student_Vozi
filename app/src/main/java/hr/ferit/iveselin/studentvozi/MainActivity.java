@@ -39,9 +39,9 @@ public class MainActivity extends BaseActivity {
         startActivity(LoginActivity.getLaunchIntent(this));
     }
 
-    @OnClick(R.id.locate)
+    @OnClick(R.id.add_request)
     void onLocateClick() {
-        startActivity(LocationActivity.getLaunchIntent(this));
+        startActivity(AddRequestActivity.getLaunchIntent(this));
     }
 
     @OnClick({R.id.logout})

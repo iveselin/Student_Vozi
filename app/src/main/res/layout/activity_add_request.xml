@@ -6,14 +6,14 @@
     tools:context="hr.ferit.iveselin.studentvozi.AddRequestActivity">
 
     <FrameLayout
-        android:id="@+id/actionBar"
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:background="@color/colorPrimary">
 
         <TextView
-            android:id="@+id/actionBarTitle"
+            android:id="@+id/action_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -23,38 +23,97 @@
             android:textSize="@dimen/actionBarTextSize" />
     </FrameLayout>
 
-
-    <NumberPicker
-        android:id="@+id/numberInput"
+    <LinearLayout
+        android:id="@+id/number_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/actionBar"
-        android:solidColor="@color/colorPrimary" />
+        android:layout_below="@id/action_bar"
+        android:layout_margin="@dimen/defaultMargin"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/number_input_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/numer_input_title_text" />
+
+        <NumberPicker
+            android:id="@+id/number_input_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:solidColor="@color/colorPrimary" />
+
+    </LinearLayout>
 
     <RadioGroup
-        android:id="@+id/rideTypeGroup"
+        android:id="@+id/ride_type_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/actionBar"
-        android:layout_toEndOf="@id/numberInput">
+        android:layout_below="@id/action_bar"
+        android:layout_margin="@dimen/defaultMargin"
+        android:layout_toEndOf="@id/number_input">
 
-        <RadioButton
+        <TextView
+            android:id="@+id/ride_type_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Text" />
+            android:text="@string/ride_type_title" />
 
         <RadioButton
+            android:id="@+id/ride_type_offer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Text2" />
+            android:text="@string/ride_type_offer_text" />
+
+        <RadioButton
+            android:id="@+id/ride_type_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ride_type_request_text" />
     </RadioGroup>
 
+    <LinearLayout
+        android:id="@+id/date_time_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/number_input"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/add_date_text" />
+
+        <Button
+            android:id="@+id/add_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/defaultMargin"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"
+            android:text="@string/add_time_text" />
+    </LinearLayout>
+
     <Button
-        android:id="@+id/submitRequest"
+        android:id="@+id/add_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_time_input"
+        android:layout_margin="@dimen/defaultMargin"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="@string/add_location_text" />
+
+    <Button
+        android:id="@+id/submit_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/defaultMargin"
+        android:background="@color/colorPrimary"
         android:text="@string/submit_request_button_text" />
-
 
 </RelativeLayout>

@@ -30,17 +30,17 @@
         android:text="Sign in" />
 
     <Button
-        android:id="@+id/locate"
+        android:id="@+id/add_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sign_in"
-        android:text="Locate yourself" />
+        android:text="Nova ponuda" />
 
     <Button
         android:id="@+id/logout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/locate"
-        android:text="Logout"/>
+        android:layout_below="@id/add_request"
+        android:text="Logout" />
 
 </RelativeLayout>

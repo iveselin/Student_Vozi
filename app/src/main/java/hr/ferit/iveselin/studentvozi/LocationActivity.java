@@ -38,6 +38,9 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
         setUi();
     }
 
+
+    // TODO: 8.8.2018. create two input fields, action bar and so on 
+
     @Override
     protected void onStart() {
         super.onStart();
