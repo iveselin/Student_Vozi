@@ -7,4 +7,13 @@
     <string name="departure_location_title">Lokacija polaska</string>
     <string name="main_title">Student vozi</string>
     <string name="submit_request_button_text">Postavi zahtjev</string>
+    <string name="ride_type_offer_text">Nudim prijevoz</string>
+    <string name="ride_type_request_text">Tražim prijevoz</string>
+    <string name="ride_type_title">Vrsta zahtjeva:</string>
+    <string name="numer_input_title_text">Broj mjesta:</string>
+    <string name="add_date_text">Datum</string>
+    <string name="add_time_text">Vrijeme</string>
+    <string name="add_location_text">Unesi lokaciju</string>
+    <string name="departure_location_hint">Putujem od:</string>
+    <string name="destination_location_hint">Putujem do:</string>
 </resources>

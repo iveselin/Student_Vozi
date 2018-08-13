@@ -20,6 +20,8 @@ import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class MainActivity extends BaseActivity {
 
+    private static final String TAG = "MainActivity";
+
 
     public static Intent getLaunchIntent(Context fromContext) {
         return new Intent(fromContext, MainActivity.class);

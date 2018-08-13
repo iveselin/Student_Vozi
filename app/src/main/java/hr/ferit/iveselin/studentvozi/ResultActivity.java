@@ -9,6 +9,8 @@ import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class ResultActivity extends BaseActivity {
 
+    private static final String TAG = "ResultActivity";
+
     public static Intent getLaunchIntent(Context fromContext) {
         return new Intent(fromContext, ResultActivity.class);
     }

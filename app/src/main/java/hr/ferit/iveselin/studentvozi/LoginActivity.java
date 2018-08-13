@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -28,6 +29,8 @@ import butterknife.ButterKnife;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class LoginActivity extends BaseActivity {
+
+    private static final String TAG = "LoginActivity";
 
 
     @BindView(R.id.login_button)
@@ -78,12 +81,12 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void onCancel() {
-
+                Toast.makeText(getApplicationContext(), "Kako bi pristupili aplikaciji, morate biti prijavljeni", Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                Log.d(TAG, "facebook login failed:" + error.toString());
             }
         });
 

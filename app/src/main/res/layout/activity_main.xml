@@ -6,13 +6,13 @@
     tools:context="hr.ferit.iveselin.studentvozi.MainActivity">
 
     <FrameLayout
-        android:id="@+id/actionBar"
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <TextView
-            android:id="@+id/actionBarTitle"
+            android:id="@+id/action_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -26,7 +26,7 @@
         android:id="@+id/sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/actionBar"
+        android:layout_below="@id/action_bar"
         android:text="Sign in" />
 
     <Button
