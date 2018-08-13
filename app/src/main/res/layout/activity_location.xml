@@ -7,13 +7,13 @@
     tools:context="hr.ferit.iveselin.studentvozi.LocationActivity">
 
     <FrameLayout
-        android:id="@+id/actionBar"
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <TextView
-            android:id="@+id/actionBarTitle"
+            android:id="@+id/action_bar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -23,6 +23,24 @@
             android:textSize="@dimen/actionBarTextSize" />
     </FrameLayout>
 
+    <EditText
+        android:id="@+id/departure_location_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar"
+        android:layout_margin="@dimen/defaultMargin"
+        android:hint="@string/departure_location_hint"
+        android:padding="@dimen/defaultPadding" />
+
+    <EditText
+        android:id="@+id/destination_location_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/departure_location_input"
+        android:layout_margin="@dimen/defaultMargin"
+        android:hint="@string/destination_location_hint"
+        android:padding="@dimen/defaultPadding" />
+
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -30,7 +48,8 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/actionBar"
+        android:layout_below="@id/destination_location_input"
+        android:layout_margin="@dimen/defaultMargin"
         tools:context=".LocationActivity" />
 
 

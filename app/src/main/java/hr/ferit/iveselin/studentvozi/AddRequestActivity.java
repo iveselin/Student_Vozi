@@ -25,6 +25,8 @@ import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class AddRequestActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
+    private static final String TAG = "AddRequestActivity";
+
     private static final int KEY_LOCATION_REQUEST = 111;
 
     private int year, month, day, hour, minute;

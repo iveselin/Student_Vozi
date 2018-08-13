@@ -2,5 +2,5 @@
 <resources>
     <dimen name="defaultMargin">10dp</dimen>
     <dimen name="actionBarTextSize">17sp</dimen>
-    <dimen name="defaultPaddign">5dp</dimen>
+    <dimen name="defaultPadding">5dp</dimen>
 </resources>

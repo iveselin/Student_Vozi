@@ -23,6 +23,8 @@ import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
 public class LocationActivity extends BaseActivity implements OnMapReadyCallback {
 
+    private static final String TAG = "LocationActivity";
+
     private GoogleMap map;
 
 
@@ -45,7 +47,9 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
     protected void onStart() {
         super.onStart();
         checkLogin();
+        checkPermissions();
     }
+
 
     private void checkLogin() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -54,6 +58,10 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
             startActivity(LoginActivity.getLaunchIntent(this));
             finish();
         }
+    }
+
+    private void checkPermissions() {
+
     }
 
     private void setUi() {
