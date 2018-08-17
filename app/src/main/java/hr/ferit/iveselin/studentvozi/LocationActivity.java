@@ -5,18 +5,16 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,7 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
@@ -86,11 +83,11 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
     private void checkLocationPermissions() {
 
         if ((ContextCompat.checkSelfPermission(getApplicationContext(), COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
-             && (ContextCompat.checkSelfPermission(getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
-                permissionsGranted = true;
-                initMap();
-                return;
-            }
+                && (ContextCompat.checkSelfPermission(getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
+            permissionsGranted = true;
+            initMap();
+            return;
+        }
 
 
         String[] permissions = {FINE_LOCATION, COURSE_LOCATION};
@@ -104,8 +101,8 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
                 if (grantResults.length > 0) {
-                    for (int i = 0; i < grantResults.length; i++) {
-                        if (grantResults[i] != PackageManager.PERMISSION_GRANTED) {
+                    for (int grantResult : grantResults) {
+                        if (grantResult != PackageManager.PERMISSION_GRANTED) {
                             permissionsGranted = false;
                             return;
                         }
@@ -126,22 +123,26 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
         try {
+
             if (permissionsGranted) {
                 Task location = fusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
+                location.addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
-                    public void onComplete(@NonNull Task task) {
+                    public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
-                            Location currentLocation = (Location) task.getResult();
-
-                            moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
-
+                            Location currentLocation = task.getResult();
+                            if (currentLocation != null) {
+                                moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                            }
+                        } else {
+                            Log.d(TAG, "onComplete: unsuccessful location");
                         }
                     }
                 });
             }
-        } catch (SecurityException e) {
 
+        } catch (SecurityException e) {
+            Log.d(TAG, "getDeviceLocation: failed call to locate device: error " + e.getMessage());
         }
     }
 
@@ -155,6 +156,7 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
 
         if (permissionsGranted) {
             getDeviceLocation();
+
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }

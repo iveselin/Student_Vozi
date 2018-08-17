@@ -6,6 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.support.annotation.BinderThread;
+import android.support.annotation.NonNull;
+import android.util.Log;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.DatePicker;
@@ -13,6 +17,12 @@ import android.widget.NumberPicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.GeoDataClient;
+import com.google.android.gms.location.places.Places;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -23,13 +33,23 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 
-public class AddRequestActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+public class AddRequestActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener,
+        TimePickerDialog.OnTimeSetListener,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final String TAG = "AddRequestActivity";
 
+    public static Intent getLaunchIntent(Context fromContext) {
+        return new Intent(fromContext, AddRequestActivity.class);
+    }
+
     private static final int KEY_LOCATION_REQUEST = 111;
+    private static final LatLngBounds CRO_BOUNDS = new LatLngBounds(new LatLng(13.6569755388, 42.47999136),
+            new LatLng(19.3904757016, 46.5037509222));
 
     private int year, month, day, hour, minute;
+    private PlaceAutocompleteAdapter placeAutocompleteAdapter;
+    private GeoDataClient geoDataClient;
 
 
     @BindView(R.id.number_input_value)
@@ -41,10 +61,15 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     @BindView(R.id.add_time)
     Button timeInput;
 
+    /*@BindView(R.id.departure_location_input)
+    AutoCompleteTextView departureInput;
 
-    public static Intent getLaunchIntent(Context fromContext) {
-        return new Intent(fromContext, AddRequestActivity.class);
-    }
+    @BindView(R.id.destination_location_input)
+    AutoCompleteTextView destinationLocation;*/
+
+    AutoCompleteTextView departureInput;
+    AutoCompleteTextView destinationInput;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +77,28 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         setContentView(R.layout.activity_add_request);
 
         setUi();
+        init();
+    }
+
+    private void setUi() {
+        Log.d(TAG, "setUi: setting UI");
+        ButterKnife.bind(this);
+
+        numberPicker.setMaxValue(8);
+        numberPicker.setMinValue(1);
+    }
+
+    private void init() {
+        Log.d(TAG, "init: initializing AutoComplete");
+
+        departureInput = findViewById(R.id.departure_location_input);
+        destinationInput = findViewById(R.id.destination_location_input);
+
+        geoDataClient = Places.getGeoDataClient(this, null);
+        placeAutocompleteAdapter = new PlaceAutocompleteAdapter(this, geoDataClient, CRO_BOUNDS, null);
+
+        departureInput.setAdapter(placeAutocompleteAdapter);
+        destinationInput.setAdapter(placeAutocompleteAdapter);
     }
 
     @Override
@@ -67,13 +114,6 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
             startActivity(LoginActivity.getLaunchIntent(this));
             finish();
         }
-    }
-
-    private void setUi() {
-        ButterKnife.bind(this);
-
-        numberPicker.setMaxValue(8);
-        numberPicker.setMinValue(1);
     }
 
     @OnClick(R.id.add_date)
@@ -97,10 +137,10 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         timePicker.show();
     }
 
-    @OnClick(R.id.add_location)
+    /*@OnClick(R.id.add_location)
     void onAddLocationClicked() {
         startActivityForResult(LocationActivity.getLaunchIntent(this), KEY_LOCATION_REQUEST);
-    }
+    }*/
 
     @OnClick(R.id.submit_request)
     void onSubmitClicked() {
@@ -134,5 +174,10 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
                 // TODO: 8.8.2018. extract locations from result data
             }
         }
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }

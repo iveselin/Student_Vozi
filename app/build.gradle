@@ -38,8 +38,9 @@ dependencies {
     implementation 'com.facebook.android:facebook-login:[4,5)'
 
 
-    implementation "com.google.android.gms:play-services-location:$GAPPS_MAP_VERSION"
+    implementation "com.google.android.gms:play-services-places:$GAPPS_MAP_VERSION"
     implementation "com.google.android.gms:play-services-maps:$GAPPS_MAP_VERSION"
+    implementation "com.google.android.gms:play-services-location:$GAPPS_MAP_VERSION"
 
     implementation "com.jakewharton:butterknife:$BUTTER_KNIFE_VERSION"
     annotationProcessor "com.jakewharton:butterknife-compiler:$BUTTER_KNIFE_VERSION"
