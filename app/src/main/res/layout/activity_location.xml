@@ -17,10 +17,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="@dimen/defaultMargin"
+            android:layout_margin="@dimen/default_margin"
             android:text="@string/departure_location_title"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/actionBarTextSize" />
+            android:textSize="@dimen/action_bar_text_size" />
     </FrameLayout>
 
     <EditText
@@ -28,18 +28,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action_bar"
-        android:layout_margin="@dimen/defaultMargin"
+        android:layout_margin="@dimen/default_margin"
         android:hint="@string/departure_location_hint"
-        android:padding="@dimen/defaultPadding" />
+        android:padding="@dimen/default_padding" />
 
     <EditText
         android:id="@+id/destination_location_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/departure_location_input"
-        android:layout_margin="@dimen/defaultMargin"
+        android:layout_margin="@dimen/default_margin"
         android:hint="@string/destination_location_hint"
-        android:padding="@dimen/defaultPadding" />
+        android:padding="@dimen/default_padding" />
 
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -49,7 +49,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/destination_location_input"
-        android:layout_margin="@dimen/defaultMargin"
+        android:layout_margin="@dimen/default_margin"
         tools:context=".LocationActivity" />
 
 
