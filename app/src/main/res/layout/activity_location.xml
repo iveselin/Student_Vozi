@@ -23,32 +23,13 @@
             android:textSize="@dimen/action_bar_text_size" />
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/departure_location_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
-        android:layout_margin="@dimen/default_margin"
-        android:hint="@string/departure_location_hint"
-        android:padding="@dimen/default_padding" />
-
-    <EditText
-        android:id="@+id/destination_location_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/departure_location_input"
-        android:layout_margin="@dimen/default_margin"
-        android:hint="@string/destination_location_hint"
-        android:padding="@dimen/default_padding" />
-
-
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/destination_location_input"
+        android:layout_below="@id/action_bar"
         android:layout_margin="@dimen/default_margin"
         tools:context=".LocationActivity" />
 

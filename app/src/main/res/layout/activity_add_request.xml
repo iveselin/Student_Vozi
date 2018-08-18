@@ -23,11 +23,67 @@
             android:textSize="@dimen/action_bar_text_size" />
     </FrameLayout>
 
+    <RelativeLayout
+        android:id="@+id/departure_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar">
+
+        <AutoCompleteTextView
+            android:id="@+id/departure_location_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_toStartOf="@id/map_icon_departure"
+            android:hint="@string/departure_location_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="@dimen/default_padding" />
+
+        <ImageView
+            android:id="@+id/map_icon_departure"
+            android:layout_width="@dimen/map_icon_size"
+            android:layout_height="@dimen/map_icon_size"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:clickable="true"
+            android:src="@drawable/ic_map" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/destination_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/departure_location">
+
+        <AutoCompleteTextView
+            android:id="@+id/destination_location_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_toStartOf="@id/map_icon_destination"
+            android:hint="@string/destination_location_hint"
+            android:imeOptions="actionSearch"
+            android:inputType="text"
+            android:padding="@dimen/default_padding" />
+
+        <ImageView
+            android:id="@+id/map_icon_destination"
+            android:layout_width="@dimen/map_icon_size"
+            android:layout_height="@dimen/map_icon_size"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:clickable="true"
+            android:src="@drawable/ic_map" />
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/number_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
+        android:layout_below="@id/date_time_input"
         android:layout_margin="@dimen/default_margin"
         android:orientation="vertical">
 
@@ -50,7 +106,7 @@
         android:id="@+id/ride_type_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
+        android:layout_below="@id/date_time_input"
         android:layout_margin="@dimen/default_margin"
         android:layout_toEndOf="@id/number_input">
 
@@ -78,7 +134,7 @@
         android:id="@+id/date_time_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/number_input"
+        android:layout_below="@id/destination_location"
         android:orientation="horizontal">
 
         <Button
@@ -99,67 +155,6 @@
             android:background="@color/colorPrimary"
             android:text="@string/add_time_text" />
     </LinearLayout>
-
-    <!--<Button
-    android:id="@+id/add_location"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_below="@id/date_time_input"
-    android:layout_margin="@dimen/default_margin"
-    android:backgroundTint="@color/colorPrimary"
-    android:text="@string/add_location_text" />-->
-
-    <RelativeLayout
-        android:id="@+id/departure_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/date_time_input">
-
-        <AutoCompleteTextView
-            android:id="@+id/departure_location_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_toStartOf="@id/map_icon_departure"
-            android:hint="@string/departure_location_hint"
-            android:inputType="text"
-            android:padding="@dimen/default_padding" />
-
-        <ImageView
-            android:id="@+id/map_icon_departure"
-            android:layout_width="@dimen/map_icon_size"
-            android:layout_height="@dimen/map_icon_size"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:src="@drawable/ic_map" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/destination_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/departure_location">
-
-        <AutoCompleteTextView
-            android:id="@+id/destination_location_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_toStartOf="@id/map_icon_destination"
-            android:hint="@string/destination_location_hint"
-            android:inputType="text"
-            android:padding="@dimen/default_padding" />
-
-        <ImageView
-            android:id="@+id/map_icon_destination"
-            android:layout_width="@dimen/map_icon_size"
-            android:layout_height="@dimen/map_icon_size"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
-            android:src="@drawable/ic_map" />
-    </RelativeLayout>
 
     <Button
         android:id="@+id/submit_request"
