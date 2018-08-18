@@ -16,4 +16,6 @@
     <string name="add_location_text">Unesi lokaciju</string>
     <string name="departure_location_hint">Putujem od:</string>
     <string name="destination_location_hint">Putujem do:</string>
+    <string name="dialog_positive_text">Prihvati adresu</string>
+    <string name="dialog_negative_text">Odbaci</string>
 </resources>
