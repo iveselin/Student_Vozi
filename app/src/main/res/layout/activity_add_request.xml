@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_height"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/action_bar_shape">
 
         <TextView
             android:id="@+id/action_bar_title"
@@ -120,12 +120,14 @@
             android:id="@+id/ride_type_offer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
             android:text="@string/ride_type_offer_text" />
 
         <RadioButton
             android:id="@+id/ride_type_request"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:buttonTint="@color/colorPrimary"
             android:text="@string/ride_type_request_text" />
     </RadioGroup>
 
@@ -143,7 +145,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_shape"
             android:text="@string/add_date_text" />
 
         <Button
@@ -152,7 +154,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/default_margin"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/button_shape"
             android:text="@string/add_time_text" />
     </LinearLayout>
 
@@ -162,7 +164,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/default_margin"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/button_shape"
         android:text="@string/submit_request_button_text" />
 
 </RelativeLayout>

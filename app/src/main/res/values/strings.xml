@@ -18,4 +18,7 @@
     <string name="destination_location_hint">Putujem do:</string>
     <string name="dialog_positive_text">Prihvati adresu</string>
     <string name="dialog_negative_text">Odbaci</string>
+    <string name="new_ride_input_text">Nova ponuda</string>
+    <string name="sign_in_text">Prijava</string>
+    <string name="sign_out_text">Odjava</string>
 </resources>
