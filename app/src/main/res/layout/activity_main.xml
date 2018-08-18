@@ -9,7 +9,7 @@
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary">
+        android:background="@drawable/action_bar_shape">
 
         <TextView
             android:id="@+id/action_bar_title"
@@ -23,24 +23,23 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/sign_in"
+        android:id="@+id/sign_in_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action_bar"
-        android:text="Sign in" />
+        android:layout_margin="@dimen/default_margin"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/colorWhite"
+        tools:text="Prijava/odjava" />
 
     <Button
         android:id="@+id/add_request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sign_in"
-        android:text="Nova ponuda" />
-
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/add_request"
-        android:text="Logout" />
+        android:layout_below="@id/sign_in_out"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@drawable/button_shape"
+        android:text="@string/new_ride_input_text"
+        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>

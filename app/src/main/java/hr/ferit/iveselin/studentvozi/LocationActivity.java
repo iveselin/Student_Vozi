@@ -98,11 +98,11 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
                 && (ContextCompat.checkSelfPermission(getApplicationContext(), FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)) {
             permissionsGranted = true;
             initMap();
-            return;
-        }
 
-        String[] permissions = {FINE_LOCATION, COURSE_LOCATION};
-        ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        } else {
+            String[] permissions = {FINE_LOCATION, COURSE_LOCATION};
+            ActivityCompat.requestPermissions(this, permissions, LOCATION_PERMISSION_REQUEST_CODE);
+        }
     }
 
     @Override
@@ -128,30 +128,6 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-    }
-
-    private String getClickedAddress(LatLng latLng) {
-        Log.d(TAG, "getClickedAddress: getting address from location");
-        List<Address> addresses = new ArrayList<>();
-
-        Geocoder geocoder = new Geocoder(this);
-
-        try {
-            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-        } catch (IOException e) {
-            Log.d(TAG, "getClickedAddress: geolocation failed: " + e.getMessage());
-        }
-
-        if (addresses.size() > 0) {
-            String address = addresses.get(0).getAddressLine(0);
-            Log.d(TAG, "getClickedAddress: found address" + address);
-            return address;
-        } else {
-            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
-            Log.d(TAG, "getClickedAddress: no data, returning null");
-            return "";
-        }
-
     }
 
     @Override
@@ -182,6 +158,30 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
         }
     }
 
+    private String getClickedAddress(LatLng latLng) {
+        Log.d(TAG, "getClickedAddress: getting address from location");
+        List<Address> addresses = new ArrayList<>();
+
+        Geocoder geocoder = new Geocoder(this);
+
+        try {
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+        } catch (IOException e) {
+            Log.d(TAG, "getClickedAddress: geolocation failed: " + e.getMessage());
+        }
+
+        if (addresses.size() > 0) {
+            String address = addresses.get(0).getAddressLine(0);
+            Log.d(TAG, "getClickedAddress: found address" + address);
+            return address;
+        } else {
+            Toast.makeText(this, "No data", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "getClickedAddress: no data, returning null");
+            return "";
+        }
+
+    }
+
     private void createDialog(final String clickedAddress) {
         AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
         alertBuilder.setMessage(clickedAddress);
@@ -203,10 +203,6 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
 
         AlertDialog alertDialog = alertBuilder.create();
         alertDialog.show();
-    }
-
-    private void moveCamera(LatLng latLng, float zoom) {
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
     private void getAddressLocation() {
@@ -251,5 +247,9 @@ public class LocationActivity extends BaseActivity implements OnMapReadyCallback
         } catch (SecurityException e) {
             Log.d(TAG, "getDeviceLocation: failed call to locate device: error " + e.getMessage());
         }
+    }
+
+    private void moveCamera(LatLng latLng, float zoom) {
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 }

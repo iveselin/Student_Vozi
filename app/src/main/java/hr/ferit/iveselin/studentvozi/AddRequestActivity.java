@@ -41,6 +41,8 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     public static final int KEY_ADDRESS_FROM_MAP_DEPARTURE = 111;
     public static final int KEY_ADDRESS_FROM_MAP_DESTINATION = 222;
     private static final String KEY_PICKED_ADDRESS = "picked_address";
+    private static final LatLngBounds CRO_BOUNDS = new LatLngBounds(new LatLng(13.6569755388, 42.47999136),
+            new LatLng(19.3904757016, 46.5037509222));
 
 
     public static Intent getLaunchIntent(Context fromContext) {
@@ -53,9 +55,6 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         return resultIntent;
     }
 
-    private static final int KEY_LOCATION_REQUEST = 111;
-    private static final LatLngBounds CRO_BOUNDS = new LatLngBounds(new LatLng(13.6569755388, 42.47999136),
-            new LatLng(19.3904757016, 46.5037509222));
 
     private int year, month, day, hour, minute;
     private PlaceAutocompleteAdapter placeAutocompleteAdapter;
@@ -183,7 +182,7 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
                     departureInput.setText(pickedAddress);
                     break;
                 case KEY_ADDRESS_FROM_MAP_DESTINATION:
-                    destinationInput.setText(data.getStringExtra(pickedAddress));
+                    destinationInput.setText(pickedAddress);
                     break;
             }
         }
