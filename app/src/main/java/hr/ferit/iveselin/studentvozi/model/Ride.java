@@ -1,16 +1,17 @@
 package hr.ferit.iveselin.studentvozi.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Ride {
 
     private int numOfPassengers;
-    private Date timeOfDeparture;
+    private Calendar timeOfDeparture;
     private RideType rideType;
     private String travelingFrom;
     private String travelingTo;
 
-    public Ride(int numOfPassengers, Date timeOfDeparture, RideType rideType, String travelingFrom, String travelingTo) {
+    public Ride(int numOfPassengers, Calendar timeOfDeparture, RideType rideType, String travelingFrom, String travelingTo) {
         this.numOfPassengers = numOfPassengers;
         this.timeOfDeparture = timeOfDeparture;
         this.rideType = rideType;
@@ -26,11 +27,11 @@ public class Ride {
         this.numOfPassengers = numOfPassengers;
     }
 
-    public Date getTimeOfDeparture() {
+    public Calendar getTimeOfDeparture() {
         return timeOfDeparture;
     }
 
-    public void setTimeOfDeparture(Date timeOfDeparture) {
+    public void setTimeOfDeparture(Calendar timeOfDeparture) {
         this.timeOfDeparture = timeOfDeparture;
     }
 
@@ -56,5 +57,16 @@ public class Ride {
 
     public void setTravelingTo(String travelingTo) {
         this.travelingTo = travelingTo;
+    }
+
+    @Override
+    public String toString() {
+        return "Ride{" +
+                "numOfPassengers=" + numOfPassengers +
+                ", timeOfDeparture=" + timeOfDeparture +
+                ", rideType=" + rideType +
+                ", travelingFrom='" + travelingFrom + '\'' +
+                ", travelingTo='" + travelingTo + '\'' +
+                '}';
     }
 }

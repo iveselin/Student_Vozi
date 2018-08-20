@@ -6,36 +6,47 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.NumberPicker;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.flags.impl.DataUtils;
 import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.zxing.common.StringUtils;
+
+import org.w3c.dom.Text;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 import hr.ferit.iveselin.studentvozi.base.PlaceAutocompleteAdapter;
+import hr.ferit.iveselin.studentvozi.model.Ride;
+import hr.ferit.iveselin.studentvozi.model.RideType;
+import hr.ferit.iveselin.studentvozi.results.ResultActivity;
 import hr.ferit.iveselin.studentvozi.utils.LoginUtils;
 
 public class AddRequestActivity extends BaseActivity implements DatePickerDialog.OnDateSetListener,
         TimePickerDialog.OnTimeSetListener,
-        GoogleApiClient.OnConnectionFailedListener {
+        GoogleApiClient.OnConnectionFailedListener,
+        RadioGroup.OnCheckedChangeListener {
 
     private static final String TAG = "AddRequestActivity";
     public static final int KEY_ADDRESS_FROM_MAP_DEPARTURE = 111;
@@ -59,6 +70,9 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     private int year, month, day, hour, minute;
     private PlaceAutocompleteAdapter placeAutocompleteAdapter;
     private GeoDataClient geoDataClient;
+    private RideType rideType;
+    private boolean dateSet = false;
+    private boolean timeSet = false;
 
 
     @BindView(R.id.number_input_value)
@@ -67,8 +81,11 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     Button dateInput;
     @BindView(R.id.add_time)
     Button timeInput;
-
+    @BindView(R.id.ride_type_group)
+    RadioGroup rideTypeGroup;
+    @BindView(R.id.departure_location_input)
     AutoCompleteTextView departureInput;
+    @BindView(R.id.destination_location_input)
     AutoCompleteTextView destinationInput;
 
 
@@ -92,8 +109,8 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     private void init() {
         Log.d(TAG, "init: initializing AutoComplete");
 
-        departureInput = findViewById(R.id.departure_location_input);
-        destinationInput = findViewById(R.id.destination_location_input);
+        rideTypeGroup.setOnCheckedChangeListener(this);
+        rideTypeGroup.check(R.id.ride_type_offer);
 
         geoDataClient = Places.getGeoDataClient(this, null);
         placeAutocompleteAdapter = new PlaceAutocompleteAdapter(this, geoDataClient, CRO_BOUNDS, null);
@@ -128,10 +145,10 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     @OnClick(R.id.add_time)
     void onAddTimeClicked() {
         final Calendar calendar = Calendar.getInstance();
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
+        int currentHour = calendar.get(Calendar.HOUR);
+        int currentMinute = calendar.get(Calendar.MINUTE);
 
-        TimePickerDialog timePicker = new TimePickerDialog(this, this, hour, minute, true);
+        TimePickerDialog timePicker = new TimePickerDialog(this, this, currentHour, currentMinute, true);
         timePicker.show();
     }
 
@@ -150,6 +167,37 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     @OnClick(R.id.submit_request)
     void onSubmitClicked() {
         // TODO: 6.8.2018. check values, collect data and make a new db entry
+        boolean error = false;
+        if (TextUtils.isEmpty(destinationInput.getText().toString())) {
+            destinationInput.setError(getString(R.string.empty_input_field_error));
+            error = true;
+        }
+        if (TextUtils.isEmpty(departureInput.getText().toString())) {
+            departureInput.setError(getString(R.string.empty_input_field_error));
+            error = true;
+        }
+        if (!dateSet) {
+            dateInput.setError(getString(R.string.empty_input_field_error));
+            error = true;
+        }
+        if (!timeSet) {
+            timeInput.setError(getString(R.string.empty_input_field_error));
+            error = true;
+        }
+        if (error) {
+            return;
+        }
+
+        int numOfPassengers = numberPicker.getValue();
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day, hour, minute);
+        String departureAddress = departureInput.getText().toString();
+        String destinationAddress = destinationInput.getText().toString();
+
+        Ride rideToSubmit = new Ride(numOfPassengers, calendar, rideType, departureAddress, destinationAddress);
+        Log.d(TAG, "onSubmitClicked: trying to save object: " + rideToSubmit.toString());
+
+        startActivity(ResultActivity.getLaunchIntent(this));
     }
 
 
@@ -161,6 +209,8 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         this.day = day;
 
         dateInput.setText(day + "." + month + "." + year + ".");
+        dateInput.setError(null);
+        dateSet = true;
     }
 
     @Override
@@ -169,6 +219,8 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         minute = i1;
 
         timeInput.setText(hour + ":" + minute);
+        timeInput.setError(null);
+        timeSet = true;
     }
 
     @Override
@@ -190,6 +242,18 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d(TAG, "onConnectionFailed: failure: " + connectionResult.getErrorMessage());
+    }
 
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (rideTypeGroup.getCheckedRadioButtonId()) {
+            case R.id.ride_type_offer:
+                rideType = RideType.OFFER;
+                break;
+            case R.id.ride_type_request:
+                rideType = RideType.REQUEST;
+                break;
+        }
     }
 }

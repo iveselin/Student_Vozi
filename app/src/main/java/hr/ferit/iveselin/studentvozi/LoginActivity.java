@@ -75,12 +75,13 @@ public class LoginActivity extends BaseActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Toast.makeText(getApplicationContext(), "Succes in login yeeey", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onSuccess: successful login");
                 handleFacebookLogin(loginResult.getAccessToken());
             }
 
             @Override
             public void onCancel() {
+                Log.d(TAG, "onCancel: user canceled the login");
                 Toast.makeText(getApplicationContext(), "Kako bi pristupili aplikaciji, morate biti prijavljeni", Toast.LENGTH_LONG).show();
             }
 

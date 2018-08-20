@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="hr.ferit.iveselin.studentvozi.ResultActivity">
+    tools:context="hr.ferit.iveselin.studentvozi.results.ResultActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/action_bar_shape">
+
+        <TextView
+            android:id="@+id/action_bar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/default_margin"
+            android:text="@string/result_title"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/action_bar_text_size" />
+    </FrameLayout>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/result_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar"
+        app:tabBackground="@color/colorPrimaryDark"
+        app:tabSelectedTextColor="@color/colorWhite"
+        app:tabTextColor="@color/colorSteelGrey" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/result_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/result_tabs" />
+
+</RelativeLayout>

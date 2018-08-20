@@ -80,6 +80,34 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:id="@+id/date_time_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/destination_location"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_weight="1"
+            android:background="@drawable/button_shape"
+            android:text="@string/add_date_text"
+            android:textColor="@color/colorWhite" />
+
+        <Button
+            android:id="@+id/add_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/default_margin"
+            android:layout_weight="1"
+            android:background="@drawable/button_shape"
+            android:text="@string/add_time_text"
+            android:textColor="@color/colorWhite" />
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/number_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -132,32 +160,6 @@
     </RadioGroup>
 
 
-    <LinearLayout
-        android:id="@+id/date_time_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/destination_location"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/add_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_weight="1"
-            android:background="@drawable/button_shape"
-            android:text="@string/add_date_text" />
-
-        <Button
-            android:id="@+id/add_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/default_margin"
-            android:layout_weight="1"
-            android:background="@drawable/button_shape"
-            android:text="@string/add_time_text" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/submit_request"
         android:layout_width="match_parent"
@@ -165,6 +167,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/default_margin"
         android:background="@drawable/button_shape"
-        android:text="@string/submit_request_button_text" />
+        android:text="@string/submit_request_button_text"
+        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>
