@@ -31,7 +31,7 @@
             android:screenOrientation="portrait" />
         <activity android:name=".LocationActivity" />
         <activity
-            android:name=".ResultActivity"
+            android:name=".results.ResultActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

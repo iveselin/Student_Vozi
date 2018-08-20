@@ -21,4 +21,6 @@
     <string name="new_ride_input_text">Nova ponuda</string>
     <string name="sign_in_text">Prijava</string>
     <string name="sign_out_text">Odjava</string>
+    <string name="empty_input_field_error">Morate ispuniti ovo polje</string>
+    <string name="result_title">Ponuda i potražnja</string>
 </resources>

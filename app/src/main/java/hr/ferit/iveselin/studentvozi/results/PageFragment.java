@@ -1,30 +1,15 @@
 package hr.ferit.iveselin.studentvozi.results;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -36,17 +21,11 @@ import hr.ferit.iveselin.studentvozi.model.RideType;
 
 public class PageFragment extends Fragment implements RideAdapter.OnItemClickListener {
 
-    private static final String TAG = "PageFragment";
-
     private static final String KEY_CAR_TYPE = "carTYPE";
 
     private List<Ride> rideList = new ArrayList<>();
     private RideType rideType;
     private RideAdapter rideAdapter;
-    private Ride clickedRide;
-
-    private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
 
     public static PageFragment newInstance(RideType rideType) {
         Bundle args = new Bundle();
@@ -59,38 +38,7 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         rideType = (RideType) getArguments().getSerializable(KEY_CAR_TYPE);
-
-        setDb();
-    }
-
-    private void setDb() {
-        Log.d(TAG, "setDb: setting the DB and fetching data");
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        if (rideType == RideType.REQUEST) {
-            databaseReference = firebaseDatabase.getReference().child("rides").child(RideType.REQUEST.name());
-        } else if (rideType == RideType.OFFER) {
-            databaseReference = firebaseDatabase.getReference().child("rides").child(RideType.OFFER.name());
-        }
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                rideList.clear();
-                for (DataSnapshot childrenSnapshot : dataSnapshot.getChildren()) {
-                    Log.d(TAG, "onDataChange: fetching: " + childrenSnapshot.getValue(Ride.class));
-                    rideList.add(childrenSnapshot.getValue(Ride.class));
-                    setRides();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        };
-        databaseReference.addValueEventListener(valueEventListener);
     }
 
 
@@ -107,77 +55,30 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
 
     private void setUI(View view) {
         rideAdapter = new RideAdapter();
-        rideAdapter.setOnItemClickListener(this);
-
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        rideAdapter.setOnItemClickListener(this);
 
-        RecyclerView ridesRecyclerView = view.findViewById(R.id.ride_list);
-        ridesRecyclerView.addItemDecoration(itemDecoration);
-        ridesRecyclerView.setLayoutManager(layoutManager);
-        ridesRecyclerView.setAdapter(rideAdapter);
-
+        RecyclerView carListRV = view.findViewById(R.id.ride_list);
+        carListRV.addItemDecoration(itemDecoration);
+        carListRV.setLayoutManager(layoutManager);
+        carListRV.setAdapter(rideAdapter);
         setRides();
     }
 
     private void setRides() {
-        Log.d(TAG, "setRides: trying to set rides");
+        rideList.add(new Ride(1, Calendar.getInstance(), RideType.REQUEST, "Osijek", "Pozega"));
+        if (rideType.equals(RideType.OFFER)) {
+            List<Ride> favourites = new ArrayList<>();
+            favourites.add(new Ride(2, Calendar.getInstance(), RideType.OFFER, "Pozega", "Osijek"));
+            rideList = favourites;
+        }
         rideAdapter.setRidesList(rideList);
     }
 
 
     @Override
     public void onRideClick(View view, int position) {
-        clickedRide = rideList.get(position);
-
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.ride_dialog, null);
-
-        TextView helperView = dialogView.findViewById(R.id.traveling_from);
-        helperView.setText(clickedRide.getTravelingFrom());
-
-        helperView = dialogView.findViewById(R.id.traveling_to);
-        helperView.setText(clickedRide.getTravelingTo());
-
-        helperView = dialogView.findViewById(R.id.time);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(clickedRide.getTimeOfDeparture());
-        helperView.setText(calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + "." +
-                "\t" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
-
-        helperView = dialogView.findViewById(R.id.num_places);
-        helperView.setText("Mjesta: " + clickedRide.getNumOfPassengers());
-
-        alertBuilder.setView(dialogView);
-        alertBuilder.setMessage(clickedRide.getRideType().getDisplayName());
-
-        alertBuilder.setPositiveButton(R.string.ride_dialog_positive_text, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                updateRide();
-            }
-        });
-
-        alertBuilder.setNegativeButton(R.string.dialog_negative_text, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-
-        AlertDialog alertDialog = alertBuilder.create();
-        alertDialog.show();
-
-    }
-
-    private void updateRide() {
-        if (!clickedRide.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            clickedRide.addSignedUpUsersEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
-            Log.d(TAG, "updateRide: updating ride " + clickedRide.getOwnerId());
-            databaseReference.child(clickedRide.getOwnerId()).setValue(clickedRide);
-        } else {
-            Toast.makeText(getActivity(), "Ovo je vaša " + clickedRide.getRideType().getDisplayName(), Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getActivity().getApplicationContext(), rideList.get(position).getRideType().getDisplayName(), Toast.LENGTH_SHORT).show();
     }
 }
