@@ -18,6 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
+import hr.ferit.iveselin.studentvozi.results.ResultActivity;
 import hr.ferit.iveselin.studentvozi.utils.LoginUtils;
 
 public class MainActivity extends BaseActivity {
@@ -69,5 +70,10 @@ public class MainActivity extends BaseActivity {
     @OnClick(R.id.add_request)
     void onLocateClick() {
         startActivity(AddRequestActivity.getLaunchIntent(this));
+    }
+
+    @OnClick(R.id.show_rides)
+    void onShowRidesCLick() {
+        startActivity(ResultActivity.getLaunchIntent(this));
     }
 }

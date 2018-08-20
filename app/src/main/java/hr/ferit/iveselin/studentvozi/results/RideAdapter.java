@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import hr.ferit.iveselin.studentvozi.R;
@@ -47,9 +48,14 @@ public class RideAdapter extends RecyclerView.Adapter<RideViewHolder> {
         }
         Ride ride = rides.get(position);
 
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(ride.getTimeOfDeparture());
+        String dateOfTravel = calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + ".";
+
         Context holderContext = holder.itemView.getContext();
         holder.rideDeparture.setText(ride.getTravelingFrom());
         holder.rideDestination.setText(ride.getTravelingTo());
+        holder.rideDate.setText(dateOfTravel);
 
     }
 
