@@ -5,15 +5,19 @@ import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import hr.ferit.iveselin.studentvozi.LoginActivity;
 import hr.ferit.iveselin.studentvozi.R;
 import hr.ferit.iveselin.studentvozi.base.BaseActivity;
 import hr.ferit.iveselin.studentvozi.model.RideType;
+import hr.ferit.iveselin.studentvozi.utils.LoginUtils;
 
 public class ResultActivity extends BaseActivity {
 
@@ -23,7 +27,8 @@ public class ResultActivity extends BaseActivity {
         return new Intent(fromContext, ResultActivity.class);
     }
 
-
+    @BindView(R.id.filter_input)
+    EditText filterInput;
     @BindView(R.id.result_view_pager)
     ViewPager viewPager;
     @BindView(R.id.result_tabs)
@@ -46,9 +51,20 @@ public class ResultActivity extends BaseActivity {
         setViewPager();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (!LoginUtils.checkLogin()) {
+            Toast.makeText(getApplicationContext(), "You have to login", Toast.LENGTH_SHORT).show();
+            startActivity(LoginActivity.getLaunchIntent(this));
+            finish();
+        }
+    }
+
     private void setViewPager() {
-        tabTitles.add("Offers");
-        tabTitles.add("Requests");
+        tabTitles.add(RideType.OFFER.getDisplayName());
+        tabTitles.add(RideType.REQUEST.getDisplayName());
 
         SimpleFragmentPageAdapter pageAdapter = new SimpleFragmentPageAdapter(getSupportFragmentManager());
         pageAdapter.setTabTitles(tabTitles);

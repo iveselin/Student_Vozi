@@ -26,6 +26,9 @@ import com.google.android.gms.location.places.GeoDataClient;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.common.StringUtils;
 
 import org.w3c.dom.Text;
@@ -68,11 +71,16 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
 
 
     private int year, month, day, hour, minute;
+    private String userId;
     private PlaceAutocompleteAdapter placeAutocompleteAdapter;
     private GeoDataClient geoDataClient;
     private RideType rideType;
     private boolean dateSet = false;
     private boolean timeSet = false;
+
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
 
     @BindView(R.id.number_input_value)
@@ -117,6 +125,10 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
 
         departureInput.setAdapter(placeAutocompleteAdapter);
         destinationInput.setAdapter(placeAutocompleteAdapter);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("rides");
     }
 
     @Override
@@ -127,6 +139,12 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
             Toast.makeText(getApplicationContext(), "You have to login", Toast.LENGTH_SHORT).show();
             startActivity(LoginActivity.getLaunchIntent(this));
             finish();
+        } else {
+            try {
+                userId = firebaseAuth.getCurrentUser().getUid();
+            } catch (NullPointerException e) {
+                Log.d(TAG, "onStart: no user exception" + e.getMessage());
+            }
         }
     }
 
@@ -194,10 +212,13 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         String departureAddress = departureInput.getText().toString();
         String destinationAddress = destinationInput.getText().toString();
 
-        Ride rideToSubmit = new Ride(numOfPassengers, calendar, rideType, departureAddress, destinationAddress);
+        Ride rideToSubmit = new Ride(numOfPassengers, calendar.getTimeInMillis(), rideType, departureAddress, destinationAddress, userId);
         Log.d(TAG, "onSubmitClicked: trying to save object: " + rideToSubmit.toString());
 
-        startActivity(ResultActivity.getLaunchIntent(this));
+        databaseReference.child(rideToSubmit.getRideType().name()).child(userId).setValue(rideToSubmit);
+
+        Toast.makeText(getApplicationContext(), rideType.getDisplayName() + "spremljena", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
 

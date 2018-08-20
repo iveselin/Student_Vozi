@@ -23,12 +23,23 @@
             android:textSize="@dimen/action_bar_text_size" />
     </FrameLayout>
 
+    <EditText
+        android:id="@+id/filter_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar"
+        android:layout_margin="@dimen/default_margin"
+        android:hint="Filtiraj po mjestu" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/result_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
-        app:tabBackground="@color/colorPrimaryDark"
+        android:layout_below="@id/filter_input"
+
+
+        app:tabBackground="@drawable/action_bar_shape"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
         app:tabSelectedTextColor="@color/colorWhite"
         app:tabTextColor="@color/colorSteelGrey" />
 

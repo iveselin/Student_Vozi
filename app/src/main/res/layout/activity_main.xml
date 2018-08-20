@@ -42,4 +42,14 @@
         android:text="@string/new_ride_input_text"
         android:textColor="@color/colorWhite" />
 
+    <Button
+        android:id="@+id/show_rides"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/add_request"
+        android:layout_margin="@dimen/default_margin"
+        android:background="@drawable/button_shape"
+        android:textColor="@color/colorWhite"
+        android:text="@string/show_rides_text"/>
+
 </RelativeLayout>

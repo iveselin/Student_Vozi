@@ -1,15 +1,27 @@
 package hr.ferit.iveselin.studentvozi.results;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -21,11 +33,16 @@ import hr.ferit.iveselin.studentvozi.model.RideType;
 
 public class PageFragment extends Fragment implements RideAdapter.OnItemClickListener {
 
+    private static final String TAG = "PageFragment";
+
     private static final String KEY_CAR_TYPE = "carTYPE";
 
     private List<Ride> rideList = new ArrayList<>();
     private RideType rideType;
     private RideAdapter rideAdapter;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     public static PageFragment newInstance(RideType rideType) {
         Bundle args = new Bundle();
@@ -38,7 +55,37 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         rideType = (RideType) getArguments().getSerializable(KEY_CAR_TYPE);
+
+        setDb();
+    }
+
+    private void setDb() {
+        Log.d(TAG, "setDb: setting the DB and fetching data");
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        if (rideType == RideType.REQUEST) {
+            databaseReference = firebaseDatabase.getReference().child("rides").child(RideType.REQUEST.name());
+        } else if (rideType == RideType.OFFER) {
+            databaseReference = firebaseDatabase.getReference().child("rides").child(RideType.OFFER.name());
+        }
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot childrenSnapshot : dataSnapshot.getChildren()) {
+                    Log.d(TAG, "onDataChange: fetching: " + childrenSnapshot.getValue(Ride.class));
+                    rideList.add(childrenSnapshot.getValue(Ride.class));
+                    setRides();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+        databaseReference.addValueEventListener(valueEventListener);
     }
 
 
@@ -55,30 +102,27 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
 
     private void setUI(View view) {
         rideAdapter = new RideAdapter();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         rideAdapter.setOnItemClickListener(this);
 
-        RecyclerView carListRV = view.findViewById(R.id.ride_list);
-        carListRV.addItemDecoration(itemDecoration);
-        carListRV.setLayoutManager(layoutManager);
-        carListRV.setAdapter(rideAdapter);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+
+        RecyclerView ridesRecylcerView = view.findViewById(R.id.ride_list);
+        ridesRecylcerView.addItemDecoration(itemDecoration);
+        ridesRecylcerView.setLayoutManager(layoutManager);
+        ridesRecylcerView.setAdapter(rideAdapter);
+
         setRides();
     }
 
     private void setRides() {
-        rideList.add(new Ride(1, Calendar.getInstance(), RideType.REQUEST, "Osijek", "Pozega"));
-        if (rideType.equals(RideType.OFFER)) {
-            List<Ride> favourites = new ArrayList<>();
-            favourites.add(new Ride(2, Calendar.getInstance(), RideType.OFFER, "Pozega", "Osijek"));
-            rideList = favourites;
-        }
+        Log.d(TAG, "setRides: trying to set rides");
         rideAdapter.setRidesList(rideList);
     }
 
 
     @Override
     public void onRideClick(View view, int position) {
-        Toast.makeText(getActivity().getApplicationContext(), rideList.get(position).getRideType().getDisplayName(), Toast.LENGTH_SHORT).show();
+
     }
 }
