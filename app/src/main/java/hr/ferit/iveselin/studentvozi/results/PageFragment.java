@@ -144,7 +144,7 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(clickedRide.getTimeOfDeparture());
         helperView.setText(calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + "." +
-                "\t" + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));
+                "\t" + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE));
 
         helperView = dialogView.findViewById(R.id.num_places);
         helperView.setText("Mjesta: " + clickedRide.getNumOfPassengers());
@@ -173,7 +173,7 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
 
     private void updateRide() {
         if (!clickedRide.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-            clickedRide.addSignedUpUsersId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            clickedRide.addSignedUpUsersEmail(FirebaseAuth.getInstance().getCurrentUser().getEmail());
             Log.d(TAG, "updateRide: updating ride " + clickedRide.getOwnerId());
             databaseReference.child(clickedRide.getOwnerId()).setValue(clickedRide);
         } else {

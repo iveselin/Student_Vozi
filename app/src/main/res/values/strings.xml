@@ -25,4 +25,10 @@
     <string name="result_title">Ponuda i potražnja</string>
     <string name="show_rides_text">Pregledaj vožnje</string>
     <string name="ride_dialog_positive_text">Prijavi se</string>
+    <string name="show_user_rides_text">Pregledaj svoje vožnje</string>
+    <string name="user_offer_heading_text">Tvoja ponuda</string>
+    <string name="applied_text">Prijavljeni</string>
+    <string name="user_request_heading_text">Tvoja potražnja</string>
+    <string name="offer_error_text">Nemate trenutnih ponuda</string>
+    <string name="request_error_text">Nemate trenutnih potražnji</string>
 </resources>
