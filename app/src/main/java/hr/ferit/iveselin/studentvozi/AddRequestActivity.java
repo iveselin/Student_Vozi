@@ -71,16 +71,17 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
 
 
     private int year, month, day, hour, minute;
-    private String userId;
-    private PlaceAutocompleteAdapter placeAutocompleteAdapter;
-    private GeoDataClient geoDataClient;
     private RideType rideType;
     private boolean dateSet = false;
     private boolean timeSet = false;
 
+    private PlaceAutocompleteAdapter placeAutocompleteAdapter;
+    private GeoDataClient geoDataClient;
+
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private String userId;
 
 
     @BindView(R.id.number_input_value)
@@ -184,7 +185,6 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
 
     @OnClick(R.id.submit_request)
     void onSubmitClicked() {
-        // TODO: 6.8.2018. check values, collect data and make a new db entry
         boolean error = false;
         if (TextUtils.isEmpty(destinationInput.getText().toString())) {
             destinationInput.setError(getString(R.string.empty_input_field_error));
@@ -215,19 +215,19 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         Ride rideToSubmit = new Ride(numOfPassengers, calendar.getTimeInMillis(), rideType, departureAddress, destinationAddress, userId);
         Log.d(TAG, "onSubmitClicked: trying to save object: " + rideToSubmit.toString());
 
-        databaseReference.child(rideToSubmit.getRideType().name()).child(userId).setValue(rideToSubmit);
+        databaseReference.child(rideType.name()).child(userId).setValue(rideToSubmit);
 
-        Toast.makeText(getApplicationContext(), rideType.getDisplayName() + "spremljena", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), rideType.getDisplayName() + " spremljena", Toast.LENGTH_SHORT).show();
         finish();
     }
 
 
     @Override
-    public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+    public void onDateSet(DatePicker datePicker, int pickedYear, int pickedMonth, int pickedDay) {
 
-        this.year = year;
-        this.month = month + 1;
-        this.day = day;
+        this.year = pickedYear;
+        this.month = pickedMonth + 1;
+        this.day = pickedDay;
 
         dateInput.setText(day + "." + month + "." + year + ".");
         dateInput.setError(null);
@@ -235,9 +235,9 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     }
 
     @Override
-    public void onTimeSet(TimePicker timePicker, int i, int i1) {
-        hour = i;
-        minute = i1;
+    public void onTimeSet(TimePicker timePicker, int pickedHour, int pickedMinute) {
+        this.hour = pickedHour;
+        this.minute = pickedMinute;
 
         timeInput.setText(hour + ":" + minute);
         timeInput.setError(null);

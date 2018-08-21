@@ -1,5 +1,6 @@
 package hr.ferit.iveselin.studentvozi.model;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Ride {
     private String travelingFrom;
     private String travelingTo;
     private String ownerId;
-    private List<String> singedUpUsersId;
+    private List<String> singedUpUsersId = new ArrayList<>();
 
 
     public Ride() {

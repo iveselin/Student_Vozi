@@ -1,5 +1,7 @@
 package hr.ferit.iveselin.studentvozi.results;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.AuthCredential;
@@ -40,6 +43,7 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
     private List<Ride> rideList = new ArrayList<>();
     private RideType rideType;
     private RideAdapter rideAdapter;
+    private Ride clickedRide;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
@@ -73,6 +77,7 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rideList.clear();
                 for (DataSnapshot childrenSnapshot : dataSnapshot.getChildren()) {
                     Log.d(TAG, "onDataChange: fetching: " + childrenSnapshot.getValue(Ride.class));
                     rideList.add(childrenSnapshot.getValue(Ride.class));
@@ -107,10 +112,10 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
 
-        RecyclerView ridesRecylcerView = view.findViewById(R.id.ride_list);
-        ridesRecylcerView.addItemDecoration(itemDecoration);
-        ridesRecylcerView.setLayoutManager(layoutManager);
-        ridesRecylcerView.setAdapter(rideAdapter);
+        RecyclerView ridesRecyclerView = view.findViewById(R.id.ride_list);
+        ridesRecyclerView.addItemDecoration(itemDecoration);
+        ridesRecyclerView.setLayoutManager(layoutManager);
+        ridesRecyclerView.setAdapter(rideAdapter);
 
         setRides();
     }
@@ -123,6 +128,56 @@ public class PageFragment extends Fragment implements RideAdapter.OnItemClickLis
 
     @Override
     public void onRideClick(View view, int position) {
+        clickedRide = rideList.get(position);
 
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.ride_dialog, null);
+
+        TextView helperView = dialogView.findViewById(R.id.traveling_from);
+        helperView.setText(clickedRide.getTravelingFrom());
+
+        helperView = dialogView.findViewById(R.id.traveling_to);
+        helperView.setText(clickedRide.getTravelingTo());
+
+        helperView = dialogView.findViewById(R.id.time);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(clickedRide.getTimeOfDeparture());
+        helperView.setText(calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + "." +
+                "\t" + calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE));
+
+        helperView = dialogView.findViewById(R.id.num_places);
+        helperView.setText("Mjesta: " + clickedRide.getNumOfPassengers());
+
+        alertBuilder.setView(dialogView);
+        alertBuilder.setMessage(clickedRide.getRideType().getDisplayName());
+
+        alertBuilder.setPositiveButton(R.string.ride_dialog_positive_text, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                updateRide();
+            }
+        });
+
+        alertBuilder.setNegativeButton(R.string.dialog_negative_text, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        AlertDialog alertDialog = alertBuilder.create();
+        alertDialog.show();
+
+    }
+
+    private void updateRide() {
+        if (!clickedRide.getOwnerId().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
+            clickedRide.addSignedUpUsersId(FirebaseAuth.getInstance().getCurrentUser().getUid());
+            Log.d(TAG, "updateRide: updating ride " + clickedRide.getOwnerId());
+            databaseReference.child(clickedRide.getOwnerId()).setValue(clickedRide);
+        } else {
+            Toast.makeText(getActivity(), "Ovo je vaša " + clickedRide.getRideType().getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

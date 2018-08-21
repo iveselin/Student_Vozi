@@ -64,6 +64,19 @@
             android:layout_marginStart="@dimen/default_margin_small"
             android:textSize="@dimen/item_text_size" />
 
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="@dimen/default_margin"
+            android:src="@drawable/ic_clock" />
+
+        <TextView
+            android:id="@+id/ride_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_margin_small"
+            android:textSize="@dimen/item_text_size" />
+
     </LinearLayout>
 
 </LinearLayout>

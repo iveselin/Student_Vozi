@@ -12,6 +12,7 @@ public class RideViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     TextView rideDestination;
     TextView rideDeparture;
     TextView rideDate;
+    TextView rideTime;
 
     public RideViewHolder(View itemView, RideAdapter.OnItemClickListener listener) {
         super(itemView);
@@ -20,6 +21,7 @@ public class RideViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         this.rideDestination = itemView.findViewById(R.id.ride_destination);
         this.rideDeparture = itemView.findViewById(R.id.ride_departure);
         this.rideDate = itemView.findViewById(R.id.ride_date);
+        this.rideTime = itemView.findViewById(R.id.ride_time);
         this.listener = listener;
 
         itemView.setOnClickListener(this);
