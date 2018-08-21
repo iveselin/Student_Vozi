@@ -67,9 +67,9 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.locate)
+    @OnClick(R.id.add_request)
     void onLocateClick() {
-        startActivity(LocationActivity.getLaunchIntent(this));
+        startActivity(AddRequestActivity.getLaunchIntent(this));
     }
 
     @OnClick(R.id.show_rides)
@@ -78,7 +78,7 @@ public class MainActivity extends BaseActivity {
     }
 
     @OnClick(R.id.show_user_posts)
-    void onShowUserRidesClick(){
+    void onShowUserRidesClick() {
         startActivity(UserPostsActivity.getLaunchIntent(this));
     }
 }
