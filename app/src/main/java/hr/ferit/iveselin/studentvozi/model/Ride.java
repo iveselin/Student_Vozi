@@ -13,19 +13,22 @@ public class Ride {
     private String travelingFrom;
     private String travelingTo;
     private String ownerId;
-    private List<String> singedUpUsersId = new ArrayList<>();
+    private String ownerEmail;
+    private List<String> singedUpUsersEmail = new ArrayList<>();
 
 
     public Ride() {
     }
 
-    public Ride(int numOfPassengers, long timeOfDeparture, RideType rideType, String travelingFrom, String travelingTo, String ownerId) {
+    public Ride(int numOfPassengers, long timeOfDeparture, RideType rideType, String travelingFrom, String travelingTo, String ownerId, String ownerEmail) {
         this.numOfPassengers = numOfPassengers;
         this.timeOfDeparture = timeOfDeparture;
         this.rideType = rideType;
         this.travelingFrom = travelingFrom;
         this.travelingTo = travelingTo;
         this.ownerId = ownerId;
+        this.ownerEmail = ownerEmail;
+
     }
 
     public int getNumOfPassengers() {
@@ -76,12 +79,20 @@ public class Ride {
         this.ownerId = ownerId;
     }
 
-    public List<String> getSingedUpUsersId() {
-        return singedUpUsersId;
+    public List<String> getSingedUpUsersEmail() {
+        return singedUpUsersEmail;
     }
 
-    public void addSignedUpUsersId(String userIdToAdd) {
-        this.singedUpUsersId.add(userIdToAdd);
+    public void addSignedUpUsersEmail(String userEmailToAdd) {
+        this.singedUpUsersEmail.add(userEmailToAdd);
+    }
+
+    public String getOwnerEmail() {
+        return ownerEmail;
+    }
+
+    public void setOwnerEmail(String ownerEmail) {
+        this.ownerEmail = ownerEmail;
     }
 
     @Override
@@ -93,7 +104,7 @@ public class Ride {
                 ", travelingFrom='" + travelingFrom + '\'' +
                 ", travelingTo='" + travelingTo + '\'' +
                 ", ownerId='" + ownerId + '\'' +
-                ", singedUpUsersId=" + singedUpUsersId +
+                ", singedUpUsersId=" + singedUpUsersEmail +
                 '}';
     }
 }

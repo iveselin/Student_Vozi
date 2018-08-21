@@ -82,6 +82,7 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private String userId;
+    private String userEmail;
 
 
     @BindView(R.id.number_input_value)
@@ -143,6 +144,7 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         } else {
             try {
                 userId = firebaseAuth.getCurrentUser().getUid();
+                userEmail = firebaseAuth.getCurrentUser().getEmail();
             } catch (NullPointerException e) {
                 Log.d(TAG, "onStart: no user exception" + e.getMessage());
             }
@@ -212,7 +214,7 @@ public class AddRequestActivity extends BaseActivity implements DatePickerDialog
         String departureAddress = departureInput.getText().toString();
         String destinationAddress = destinationInput.getText().toString();
 
-        Ride rideToSubmit = new Ride(numOfPassengers, calendar.getTimeInMillis(), rideType, departureAddress, destinationAddress, userId);
+        Ride rideToSubmit = new Ride(numOfPassengers, calendar.getTimeInMillis(), rideType, departureAddress, destinationAddress, userId, userEmail);
         Log.d(TAG, "onSubmitClicked: trying to save object: " + rideToSubmit.toString());
 
         databaseReference.child(rideType.name()).child(userId).setValue(rideToSubmit);

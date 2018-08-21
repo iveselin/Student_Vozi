@@ -76,4 +76,9 @@ public class MainActivity extends BaseActivity {
     void onShowRidesCLick() {
         startActivity(ResultActivity.getLaunchIntent(this));
     }
+
+    @OnClick(R.id.show_user_posts)
+    void onShowUserRidesClick(){
+        startActivity(UserPostsActivity.getLaunchIntent(this));
+    }
 }
