@@ -27,8 +27,7 @@ public class ResultActivity extends BaseActivity {
         return new Intent(fromContext, ResultActivity.class);
     }
 
-    @BindView(R.id.filter_input)
-    EditText filterInput;
+
     @BindView(R.id.result_view_pager)
     ViewPager viewPager;
     @BindView(R.id.result_tabs)

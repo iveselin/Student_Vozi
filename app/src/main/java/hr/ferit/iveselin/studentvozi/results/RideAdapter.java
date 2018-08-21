@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.zxing.common.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -51,11 +53,12 @@ public class RideAdapter extends RecyclerView.Adapter<RideViewHolder> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(ride.getTimeOfDeparture());
         String dateOfTravel = calendar.get(Calendar.DATE) + "." + calendar.get(Calendar.MONTH) + "." + calendar.get(Calendar.YEAR) + ".";
+        String timeOfTravel = calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE);
 
-        Context holderContext = holder.itemView.getContext();
         holder.rideDeparture.setText(ride.getTravelingFrom());
         holder.rideDestination.setText(ride.getTravelingTo());
         holder.rideDate.setText(dateOfTravel);
+        holder.rideTime.setText(timeOfTravel);
 
     }
 
